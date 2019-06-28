@@ -18,7 +18,7 @@ class Map extends Component {
         this.bffClient = new BFFClient()
         this.state = {
             address: '',
-            modal: false,
+            modal: true,
             modalData: {},
             mapPosition: {
                 lat: center.lat,
@@ -39,7 +39,7 @@ class Map extends Component {
 
     componentDidMount = async () => {
         try {
-            await this.updateData(this.state.mapPosition.lat, this.state.mapPosition.lng, null, false)
+            await this.updateData(this.state.mapPosition.lat, this.state.mapPosition.lng, null)
         } catch (e) {
             throw new Error(e.message)
         }
@@ -62,17 +62,17 @@ class Map extends Component {
         const address = place.formatted_address
         const latValue = place.geometry.location.lat()
         const lngValue = place.geometry.location.lng()
-        await this.updateData(latValue, lngValue, address, true)
+        await this.updateData(latValue, lngValue, address)
     }
 
 
     handleClickOnMap = async (e) => {
         const latValue = e.latLng.lat()
         const lngValue = e.latLng.lng()
-        await this.updateData(latValue, lngValue, null, true)
+        await this.updateData(latValue, lngValue, null)
     }
 
-    updateData = async (latValue, lngValue, address, toggle) => {
+    updateData = async (latValue, lngValue, address) => {
         if(!address) {
             const response = await Geocode.fromLatLng(latValue, lngValue)
             address = response.results[0].formatted_address
@@ -93,7 +93,7 @@ class Map extends Component {
                 lng: lngValue,
             },
         })
-        if(toggle) { this.toggleModal() }
+        this.toggleModal()
     }
 
     render() {
