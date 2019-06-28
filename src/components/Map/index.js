@@ -65,14 +65,16 @@ class Map extends Component {
         this.setState({[event.target.name]: event.target.value})
     }
 
-    onPlaceSelected = (place) => {
+    onPlaceSelected = async(place) => {
         const address = place.formatted_address
         const latValue = place.geometry.location.lat()
         const lngValue = place.geometry.location.lng()
+        const weatherData = await this.bffClient.getWeatherByPosition(latValue, lngValue)
         let country = address.split(', ')
         country = country.length > 0 ? country[country.length-1] : ''
         this.setState({
             address: address || '',
+            modalData: weatherData,
             country,
             markerPosition: {
                 lat: latValue,
@@ -83,6 +85,7 @@ class Map extends Component {
                 lng: lngValue,
             },
         })
+        this.toggleModal()
     };
 
     handleClickOnMap = async (e) => {
@@ -159,7 +162,7 @@ class Map extends Component {
                                             Probabilidad de lluvia:
                                         </div>
                                         <div className="col-4">
-                                            {modalData.currently.precipProbability}
+                                            {modalData.currently.precipProbability} %
                                         </div>
                                     </div>
                                     <div className="row justify-content-center">
