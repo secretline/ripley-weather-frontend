@@ -3,6 +3,6 @@
   "CENTER_LNG": -70.591930,
   "ZOOM": 5,
   "API_KEY": "AIzaSyBi1fxFvjh0sJSGl_A1ydiDh1PoSiPCqLA",
-  "BFF_API_BASE_URL": "http://localhost:3001",
+  "BFF_API_BASE_URL": "https://enigmatic-fortress-30409.herokuapp.com",
   "BFF_API_WEATHER_PATH": "/weather"
 }
