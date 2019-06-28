@@ -18,15 +18,15 @@ class Map extends Component {
         this.bffClient = new BFFClient()
         this.state = {
             address: '',
-            modal: true,
+            modal: false,
             modalData: {},
             mapPosition: {
                 lat: center.lat,
                 lng: center.lng,
             },
             markerPosition: {
-                lat: center.lat,
-                lng: center.lng,
+                lat: null,
+                lng: null,
             },
             country: ''
         }
@@ -39,7 +39,7 @@ class Map extends Component {
 
     componentDidMount = async () => {
         try {
-            await this.updateData(this.state.mapPosition.lat, this.state.mapPosition.lng, null)
+            await this.updateData(this.state.mapPosition.lat, this.state.mapPosition.lng, null, false)
         } catch (e) {
             throw new Error(e.message)
         }
@@ -72,7 +72,7 @@ class Map extends Component {
         await this.updateData(latValue, lngValue, null)
     }
 
-    updateData = async (latValue, lngValue, address) => {
+    updateData = async (latValue, lngValue, address, toggle = true) => {
         if(!address) {
             const response = await Geocode.fromLatLng(latValue, lngValue)
             address = response.results[0].formatted_address
@@ -93,7 +93,7 @@ class Map extends Component {
                 lng: lngValue,
             },
         })
-        this.toggleModal()
+        if(toggle) { this.toggleModal() }
     }
 
     render() {
