@@ -5,7 +5,7 @@ const config = require('../configuration')
 export default class BFFClient {
     constructor() {
         this.instance = axios.create({
-            baseURL: `${config.BFF_API_BASE_URL}${config.BFF_API_WEATHER_PATH}`,
+            baseURL: `${config.get('BFF_API_BASE_URL')}${config.get('BFF_API_WEATHER_PATH')}`,
         })
         axiosRetry(this.instance, { retries: 5 });
     }
