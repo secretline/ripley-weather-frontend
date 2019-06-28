@@ -1,0 +1,10 @@
+{
+  "center": {
+    "lat": -33.400484,
+    "lng": -70.591930
+  },
+  "zoom": 5,
+  "apiKey": "AIzaSyBi1fxFvjh0sJSGl_A1ydiDh1PoSiPCqLA",
+  "bff_api_base_url": "http://localhost:3001",
+  "bff_api_weather_path": "/weather"
+}
