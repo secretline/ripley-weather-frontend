@@ -139,29 +139,6 @@ class Map extends Component {
                             <ModalHeader
                                 toggle={this.toggleModal}>{country}: {modalData.currently ? modalData.currently.summary : ''}</ModalHeader>
                             <ModalBody>
-                                {/*
-                                "currently": {
-"time": 1561693055,
-"summary": "Nublado",
-"icon": "cloudy",
-"nearestStormDistance": 7,
-"nearestStormBearing": 157,
-"precipIntensity": 0,
-"precipProbability": 0,
-"temperature": 15.17,
-"apparentTemperature": 15.17,
-"dewPoint": 10.67,
-"humidity": 0.75,
-"pressure": 1017.57,
-"windSpeed": 4.12,
-"windGust": 7.5,
-"windBearing": 279,
-"cloudCover": 0.89,
-"uvIndex": 0,
-"visibility": 13.453,
-"ozone": 342.6
-},
-                                */}
                                 {modalData.currently && <Fragment>
                                     <div className="row justify-content-center">
                                         { address }

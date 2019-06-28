@@ -1,14 +1,14 @@
 FROM node:alpine
 
-RUN apk update && apk add redis
-
 WORKDIR /home
 
 COPY package.json ./
+COPY public public
 COPY src src
-COPY entrypoint.sh entrypoint.sh
 
 RUN yarn install --production --silent
 
-ENTRYPOINT /home/entrypoint.sh
+RUN yarn build
+
+ENTRYPOINT yarn serve
 
