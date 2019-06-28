@@ -10,10 +10,10 @@ class Home extends Component {
             <div style={{margin: '0px'}}>
                 <Map
                     google={google}
-                    center={{...config.center}}
+                    center={{lat: config.get('CENTER_LAT'), lng: config.get('CENTER_LNG')}}
                     height={window.innerHeight - 200}
-                    zoom={config.zoom}
-                    apiKey={config.apiKey}
+                    zoom={config.get('ZOOM')}
+                    apiKey={config.get('API_KEY')}
                 />
             </div>
         )

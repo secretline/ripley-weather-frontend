@@ -1,4 +1,6 @@
 build:
+  config:
+    BFF_API_WEATHER_PATH: https://enigmatic-fortress-30409.herokuapp.com
   docker:
     web: Dockerfile
 run:
