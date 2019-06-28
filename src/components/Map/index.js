@@ -39,11 +39,7 @@ class Map extends Component {
 
     componentDidMount = async () => {
         try {
-            const response = await Geocode.fromLatLng(this.state.mapPosition.lat, this.state.mapPosition.lng)
-            const address = response.results[0].formatted_address
-            let country = address.split(', ')
-            country = country.length > 0 ? country[country.length-1] : ''
-            this.setState({address: address || '', country})
+            await this.updateData(this.state.mapPosition.lat, this.state.mapPosition.lng, null, false)
         } catch (e) {
             throw new Error(e.message)
         }
@@ -61,14 +57,26 @@ class Map extends Component {
         return false
     }
 
-    onChange = (event) => {
-        this.setState({[event.target.name]: event.target.value})
-    }
-
     onPlaceSelected = async(place) => {
+        if(!place.formatted_address) { return }
         const address = place.formatted_address
         const latValue = place.geometry.location.lat()
         const lngValue = place.geometry.location.lng()
+        await this.updateData(latValue, lngValue, address, true)
+    }
+
+
+    handleClickOnMap = async (e) => {
+        const latValue = e.latLng.lat()
+        const lngValue = e.latLng.lng()
+        await this.updateData(latValue, lngValue, null, true)
+    }
+
+    updateData = async (latValue, lngValue, address, toggle) => {
+        if(!address) {
+            const response = await Geocode.fromLatLng(latValue, lngValue)
+            address = response.results[0].formatted_address
+        }
         const weatherData = await this.bffClient.getWeatherByPosition(latValue, lngValue)
         let country = address.split(', ')
         country = country.length > 0 ? country[country.length-1] : ''
@@ -85,34 +93,8 @@ class Map extends Component {
                 lng: lngValue,
             },
         })
-        this.toggleModal()
-    };
-
-    handleClickOnMap = async (e) => {
-        const lat = e.latLng.lat()
-        const lng = e.latLng.lng()
-        const weatherData = await this.bffClient.getWeatherByPosition(lat, lng)
-        const response = await Geocode.fromLatLng(lat, lng)
-        const address = response.results[0].formatted_address
-        let country = address.split(', ')
-        country = country.length > 0 ? country[country.length-1] : ''
-
-        await this.setState({
-            markerPosition: {
-                lat,
-                lng,
-            },
-            mapPosition: {
-                lat,
-                lng,
-            },
-            address: address || '',
-            modalData: weatherData,
-            country
-        })
-        this.toggleModal()
+        if(toggle) { this.toggleModal() }
     }
-
 
     render() {
         const AsyncMap = withScriptjs(withGoogleMap(() => {
