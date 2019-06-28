@@ -10,5 +10,3 @@ RUN yarn install --production --silent
 
 RUN yarn build
 
-ENTRYPOINT yarn serve
-
