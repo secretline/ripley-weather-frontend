@@ -104,13 +104,13 @@ class Map extends Component {
                     <GoogleMap
                         google={google}
                         defaultZoom={zoom}
-                        defaultCenter={{lat: mapPosition.lat, lng: mapPosition.lng}}
+                        defaultCenter={{lat: parseFloat(mapPosition.lat), lng: parseFloat(mapPosition.lng)}}
                         onClick={e => this.handleClickOnMap(e)}
                     >
                         <Marker
                             google={google}
                             onDragEnd={this.onMarkerDragEnd}
-                            position={{lat: markerPosition.lat, lng: markerPosition.lng}}
+                            position={{lat: parseFloat(markerPosition.lat), lng: parseFloat(markerPosition.lng)}}
                             options={{
                                 icon: {
                                     url: '/images/marker.png',
@@ -176,8 +176,10 @@ class Map extends Component {
                 )
             }),
         )
-        const {center, height} = this.props
-        if (center.lat !== undefined) {
+        const {mapPosition} = this.state
+
+        const {height} = this.props
+        if (mapPosition.lat && mapPosition.lng) {
             return (
                 <div>
                     <AsyncMap
