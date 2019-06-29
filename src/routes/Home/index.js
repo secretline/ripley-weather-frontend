@@ -4,10 +4,12 @@ import Map from '../../components/Map'
 const config = require('../../configuration')
 
 class Home extends Component {
+    componentDidMount() {
+    }
     render() {
         const {google} = this.props
         return (
-            <div style={{margin: '0px'}}>
+            <div style={{margin: '0px'}} id="map">
                 <Map
                     google={google}
                     center={{lat: config.get('CENTER_LAT'), lng: config.get('CENTER_LNG')}}
